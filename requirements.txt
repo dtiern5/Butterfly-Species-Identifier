@@ -10,8 +10,6 @@ base58==2.1.0
 bebi103==0.1.8
 bleach==4.1.0
 blinker==1.4
-bokeh==2.4.0
-Bottleneck @ file:///C:/ci/bottleneck_1607557040328/work
 cachetools==4.2.2
 certifi==2021.5.30
 cffi==1.14.6
