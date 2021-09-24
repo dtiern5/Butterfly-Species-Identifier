@@ -1,18 +1,15 @@
-import streamlit as st
-import tensorflow as tf
-from tensorflow.keras.preprocessing.image import load_img, img_to_array
-import cv2
-import numpy as np
-import matplotlib.pyplot as plt
-
-from tensorflow.keras.models import load_model
 import PIL
-from tempfile import NamedTemporaryFile
+import numpy as np
+import streamlit as st
+from PIL import Image
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.image import img_to_array
+
 from classifier import machine_classification, get_percentages, bar_graph_predictions
 
 
 def main():
-    text = "Dashboard"
+    "Dashboard"
     page = st.sidebar.selectbox("Dashboard", ["Image Prediction", "Analysis"])
 
     if page == "Image Prediction":
@@ -25,10 +22,15 @@ def main():
 
         if uploaded_file is not None:
             img = PIL.Image.open(uploaded_file)
+
+            with Image.open(uploaded_file) as img:
+
+                (width, height) = (220, 220)
+                im_resized = img.resize((width, height))
+
             st.image(img, caption='Predicting image...', use_column_width=True)
 
-            img_array = img_to_array(img)
-            img_array = cv2.resize(img_array, (220, 220))
+            img_array = img_to_array(im_resized)
             print("image shape: ", img_array.shape)
             img_array = img_array / 255
             img_array = np.expand_dims(img_array, axis=0)
