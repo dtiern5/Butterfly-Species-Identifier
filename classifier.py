@@ -1,11 +1,7 @@
-import tensorflow as tf
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing.image import img_to_array,load_img
 import matplotlib.pyplot as plt
-import numpy as np
-import cv2
 
 from labels import labels, classification
+
 
 def machine_classification(prediction):
     ans = prediction.argmax(axis=-1)
