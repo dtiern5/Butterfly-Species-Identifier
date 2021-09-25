@@ -9,16 +9,32 @@ from classifier import machine_classification, get_percentages, bar_graph_predic
 
 
 def main():
-    "Dashboard"
-    page = st.sidebar.selectbox("Dashboard", ["Image Prediction", "Analysis"])
+    st.sidebar.header("Dashboard")
+    page = st.sidebar.selectbox("Page", ["Image Prediction", "Analysis", "Jupyter Notebook"])
 
+    # Image Prediction page
     if page == "Image Prediction":
-        st.title("Butterfly Classifier")
-        st.header("Using a 10 butterfly dataset to predict the species in an uploaded image")
-        st.text("Upload an image to predict a butterfly")
+
+        col1, col2 = st.columns(2)
+        col1.title("Butterfly Classifier")
+        col1.subheader("Accepts the following species:")
+        col1.text('1. Danaus plexippus')
+        col1.text('2. Heliconius erato')
+        col1.text('3. Junonia coenia')
+        col1.text('4. Lycaena phlaeas')
+        col1.text('5. Nymphalis antiopa')
+        col1.text('6. Papilio cresphontes')
+        col1.text('7. Pieris rapae')
+        col1.text('8. Heliconius charitonius')
+        col1.text('9. Vanessa atalanta')
+        col1.text('10. Vanessa cardui')
+
+
+
+        col2.header("Upload")
 
         model = load_model('dense_model.h5')
-        uploaded_file = st.file_uploader("Select a picture: ", type="jpg")
+        uploaded_file = col2.file_uploader("Select a picture: ", type="jpg")
 
         if uploaded_file is not None:
             img = PIL.Image.open(uploaded_file)
@@ -28,7 +44,7 @@ def main():
                 (width, height) = (220, 220)
                 im_resized = img.resize((width, height))
 
-            st.image(img, caption='Predicting image...', use_column_width=True)
+            col2.image(img, caption='Predicting image...', use_column_width=True)
 
             img_array = img_to_array(im_resized)
             print("image shape: ", img_array.shape)
@@ -41,10 +57,8 @@ def main():
             percentages = get_percentages(prediction)
             bar_graph = bar_graph_predictions(prediction)
 
-            print(label)
             st.write("")
-            st.write("Prediction: ", label)
-            st.write("")
+            st.subheader("Prediction:")
             for percentage in percentages[:3]:
                 st.write(percentage)
 
@@ -52,8 +66,8 @@ def main():
 
     if page == "Analysis":
         st.title("Butterfly Classifier Analysis")
-        st.header("Cool charts and graphs")
-        st.text("Here's some text")
+
+        col1, col2, col3 = st.columns(3)
 
         confusion_matrix = PIL.Image.open('visualizations/dense_confusion_matrix.png')
         data_example = PIL.Image.open('visualizations/six_random_butterflies.png')
@@ -61,28 +75,32 @@ def main():
         clf_report = PIL.Image.open('visualizations/dense_clf_report.png')
         pca = PIL.Image.open('visualizations/PCA.png')
         pair_plot = PIL.Image.open('visualizations/pairplot_kde.png')
+        kmeans = PIL.Image.open('visualizations/K-Means.png')
 
-        st.text("Example images from dataset")
-        st.image(data_example)
-        st.text("")
+        col1.text("Example images from dataset")
+        col1.image(data_example)
+        col1.text("")
 
-        st.text("Distribution of images for each class in dataset")
-        st.image(data_distribution)
-        st.text("")
+        col1.text("Distribution of images for each class in dataset")
+        col1.image(data_distribution)
+        col1.text("")
 
-        st.text("Confusion matrix")
-        st.image(confusion_matrix)
-        st.text("")
+        col2.text("Confusion matrix")
+        col2.image(confusion_matrix)
+        col2.text("")
 
-        "Classification report"
-        st.image(clf_report)
-        st.text("")
+        col2.text("Classification report")
+        col2.image(clf_report)
+        col2.text("")
 
-        "Principal component analysis"
-        st.image(pca)
+        col3.text("Principal component analysis")
+        col3.image(pca)
 
-        "Pairplot report"
-        st.image(pair_plot)
+        col3.text("Pairplot report")
+        col3.image(pair_plot)
+
+        col3.text("K-Means")
+        col3.image(kmeans)
 
 
 if __name__ == '__main__':

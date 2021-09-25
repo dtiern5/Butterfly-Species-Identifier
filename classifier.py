@@ -60,7 +60,7 @@ def bar_graph_predictions(predictions):
     fig.set_size_inches(22, 14)
     font = {'family': 'normal',
             'weight': 'bold',
-            'size': 18}
+            'size': 22}
 
     plt.rc('font', **font)
     plt.setp(ax.get_xticklabels(), rotation=30, horizontalalignment='right')
