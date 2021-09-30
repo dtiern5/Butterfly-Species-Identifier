@@ -47,12 +47,13 @@ def main():
             col2.image(img, caption='Predicting image...', use_column_width=True)
 
             img_array = img_to_array(im_resized)
-            print("image shape: ", img_array.shape)
+            print("IMAGE SHAPE:", img_array.shape)
             img_array = img_array / 255
             img_array = np.expand_dims(img_array, axis=0)
+            print("IMAGE EXPANDED SHAPE:", img_array.shape)
 
             prediction = model.predict(img_array)
-
+            print("NP.ARGMAX:", np.argmax(prediction))
             label = machine_classification(prediction)
             percentages = get_percentages(prediction)
             bar_graph = bar_graph_predictions(prediction)
@@ -69,10 +70,10 @@ def main():
 
         col1, col2, col3 = st.columns(3)
 
-        confusion_matrix = PIL.Image.open('visualizations/dense_confusion_matrix.png')
+        confusion_matrix = PIL.Image.open('visualizations/matrix_dense.png')
         data_example = PIL.Image.open('visualizations/six_random_butterflies.png')
         data_distribution = PIL.Image.open('visualizations/images_per_species.png')
-        clf_report = PIL.Image.open('visualizations/dense_clf_report.png')
+        clf_report = PIL.Image.open('visualizations/clf_dense.png')
         pca = PIL.Image.open('visualizations/PCA.png')
         pair_plot = PIL.Image.open('visualizations/pairplot_kde.png')
         kmeans = PIL.Image.open('visualizations/K-Means.png')
