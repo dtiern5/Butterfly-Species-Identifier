@@ -10,7 +10,7 @@ from classifier import machine_classification, get_percentages, bar_graph_predic
 
 def main():
     st.sidebar.header("Dashboard")
-    page = st.sidebar.selectbox("Page", ["Image Prediction", "Analysis", "Jupyter Notebook"])
+    page = st.sidebar.selectbox("Page", ["Image Prediction", "Dataset", "Neural Network"])
 
     # Image Prediction page
     if page == "Image Prediction":
@@ -65,43 +65,87 @@ def main():
 
             st.pyplot(fig=bar_graph, clear_figure=None)
 
-    if page == "Analysis":
-        st.title("Butterfly Classifier Analysis")
-
-        col1, col2, col3 = st.columns(3)
-
-        confusion_matrix = PIL.Image.open('visualizations/matrix_dense.png')
+    if page == "Dataset":
         data_example = PIL.Image.open('visualizations/six_random_butterflies.png')
+        data_example_code = PIL.Image.open('visualizations/six_random_butterflies_code.png')
         data_distribution = PIL.Image.open('visualizations/images_per_species.png')
+        data_distribution_code = PIL.Image.open('visualizations/images_per_species_code.png')
+
+
+        st.title("Dataset")
+        st.text("")
+
+        st.subheader("Example images from dataset")
+        st.write("A random selection from the dataset obtained from the following code:")
+        st.image(data_example_code)
+        st.image(data_example)
+        st.text("")
+        st.text("")
+
+        st.subheader("Distribution of images for each class in dataset")
+        st.write("Visualization of the data distribution plotted with the following code:")
+        st.image(data_example_code)
+        st.image(data_distribution)
+
+
+
+    if page == "Neural Network":
+        confusion_matrix = PIL.Image.open('visualizations/matrix_dense.png')
+        confusion_matrix_code = PIL.Image.open('visualizations/matrix_dense_code.png')
         clf_report = PIL.Image.open('visualizations/clf_dense.png')
-        pca = PIL.Image.open('visualizations/PCA.png')
+        clf_report_code = PIL.Image.open('visualizations/clf_dense_code.png')
+        precision = PIL.Image.open('visualizations/precision.PNG')
+        recall = PIL.Image.open('visualizations/recall.PNG')
+        f_one = PIL.Image.open('visualizations/f1.PNG')
+        pca = PIL.Image.open('visualizations/PCA_with_lines.png')
+        pca_code_flatten = PIL.Image.open('visualizations/pca_code_flatten.PNG')
+        pca_code_graph = PIL.Image.open('visualizations/pca_code_graph.PNG')
         pair_plot = PIL.Image.open('visualizations/pairplot_kde.png')
-        kmeans = PIL.Image.open('visualizations/K-Means.png')
+        pair_plot_code = PIL.Image.open('visualizations/pairplot_code.png')
 
-        col1.text("Example images from dataset")
-        col1.image(data_example)
-        col1.text("")
+        st.title("Neural Network Analysis")
 
-        col1.text("Distribution of images for each class in dataset")
-        col1.image(data_distribution)
-        col1.text("")
+        st.subheader("Confusion matrix")
+        st.write("Confusion matrix visualization of the DenseNet121 model over the test set")
+        st.image(confusion_matrix_code)
+        st.image(confusion_matrix)
+        st.write("The confusion matrix is showing close to 100% accuracy with classes 1, 4, and 10. "
+                 "These correspond to Danaus plexippus, Junonia coenia, and Vanessa cardui respectively. "
+                 "Class 5, Lycaena phlaeas is most often confused with Vanessa atalanta and Vanessa cardui. "
+                 "Class 3, Heliconius erato has some small errors being identified as Heliconius charitonius.")
+        st.text("")
+        st.text("")
 
-        col2.text("Confusion matrix")
-        col2.image(confusion_matrix)
-        col2.text("")
+        st.subheader("Classification report")
+        st.image(clf_report_code)
+        st.image(clf_report)
+        st.image(precision)
+        st.image(recall)
+        st.image(f_one)
+        st.write("While we are achieving 99% accuracy, there are some specific weaknesses in the model around "
+                 "Heliconius charitonius and Heliconius erato. The classification report’s recall metric "
+                 "is a ratio of true positives to the sum of true positives and false negatives. "
+                 "In this case, it means that we are missing true positives of Heliconius charitonius. "
+                 "The F1 score is also a touch lower, meaning some of our positive predictions were also "
+                 "incorrect.")
+        st.text("")
+        st.text("")
 
-        col2.text("Classification report")
-        col2.image(clf_report)
-        col2.text("")
+        st.subheader("Principal component analysis")
+        st.image(pca_code_flatten)
+        st.image(pca_code_graph)
+        st.image(pca)
+        st.write("PCA works to reduce the dimensionality of data and compress information by removing redundancies "
+                 "in data. Samples and characteristics are not discarded, but instead are flattened into two "
+                 "principal components. The eigenvectors have been superimposed onto the image, and X2 and Y2 "
+                 "represent the Principal Component axes. This relationship can further be viewed in the "
+                 "following Pairplot report.")
+        st.text("")
+        st.text("")
 
-        col3.text("Principal component analysis")
-        col3.image(pca)
-
-        col3.text("Pairplot report")
-        col3.image(pair_plot)
-
-        col3.text("K-Means")
-        col3.image(kmeans)
+        st.subheader("Pairplot report")
+        st.image(pair_plot_code)
+        st.image(pair_plot)
 
 
 if __name__ == '__main__':
