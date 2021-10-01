@@ -34,7 +34,7 @@ def main():
         col2.header("Upload")
 
         model = load_model('dense_model.h5')
-        uploaded_file = col2.file_uploader("Select a picture: ", type="jpg")
+        uploaded_file = col2.file_uploader("Select a picture: ", type=['png', 'jpeg', 'jpg'])
 
         if uploaded_file is not None:
             img = PIL.Image.open(uploaded_file)
