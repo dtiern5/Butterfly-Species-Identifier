@@ -1,0 +1,4 @@
+2021-10-01 12:25:18.934529: Prediction made: Danaus plexippus
+2021-10-01 12:25:26.549870: Prediction made: Vanessa cardui
+2021-10-01 12:25:32.543985: Prediction made: Heliconius charitonius
+2021-10-01 12:25:55.122300: Prediction made: Lycaena phlaeas

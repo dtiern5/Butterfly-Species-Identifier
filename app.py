@@ -4,11 +4,14 @@ import streamlit as st
 from PIL import Image
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
-
 from classifier import machine_classification, get_percentages, bar_graph_predictions
+import datetime
+
 
 
 def main():
+    log = open("dash_log.txt", "a")
+
     st.sidebar.header("Dashboard")
     page = st.sidebar.selectbox("Page", ["Image Prediction", "Dataset", "Neural Network"])
 
@@ -56,7 +59,10 @@ def main():
             print("NP.ARGMAX:", np.argmax(prediction))
             label = machine_classification(prediction)
             percentages = get_percentages(prediction)
+
             bar_graph = bar_graph_predictions(prediction)
+
+            log.write("{}: Prediction made: {}\n".format(datetime.datetime.now(), label))
 
             st.write("")
             st.subheader("Prediction:")
