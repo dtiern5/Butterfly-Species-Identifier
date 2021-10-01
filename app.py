@@ -107,7 +107,7 @@ def main():
         pca_code_flatten = PIL.Image.open('visualizations/pca_code_flatten.PNG')
         pca_code_graph = PIL.Image.open('visualizations/pca_code_graph.PNG')
         pair_plot = PIL.Image.open('visualizations/pairplot_kde.png')
-        pair_plot_code = PIL.Image.open('visualizations/pairplot_code.png')
+        pair_plot_code = PIL.Image.open('visualizations/pairplot_code.PNG')
 
         st.title("Neural Network Analysis")
 
