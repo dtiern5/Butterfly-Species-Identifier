@@ -1,5 +1,6 @@
 tensorflow_cpu==2.6.0
 matplotlib==3.3.4
-streamlit==0.89.0
+streamlit~=0.84.2
 numpy==1.19.5
 Pillow==8.3.2
+mysql-connector-python~=8.0.25

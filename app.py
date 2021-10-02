@@ -6,11 +6,12 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
 from classifier import machine_classification, get_percentages, bar_graph_predictions
 import datetime
+from connector import create_server_connection, create_db_connection, execute_query
 
 
 
 def main():
-    log = open("dash_log.txt", "a")
+    connection = create_db_connection("localhost", "root", "ROOT33qq!", "dash_log")
 
     st.sidebar.header("Dashboard")
     page = st.sidebar.selectbox("Page", ["Image Prediction", "Dataset", "Neural Network"])
@@ -31,8 +32,6 @@ def main():
         col1.text('8. Heliconius charitonius')
         col1.text('9. Vanessa atalanta')
         col1.text('10. Vanessa cardui')
-
-
 
         col2.header("Upload")
 
@@ -62,14 +61,15 @@ def main():
 
             bar_graph = bar_graph_predictions(prediction)
 
-            log.write("{}: Prediction made: {}\n".format(datetime.datetime.now(), label))
-
             st.write("")
             st.subheader("Prediction:")
             for percentage in percentages[:3]:
                 st.write(percentage)
 
             st.pyplot(fig=bar_graph, clear_figure=None)
+
+            query = f"INSERT INTO dash_log.log (species) VALUES '{label}';"
+            execute_query(connection, query)
 
     if page == "Dataset":
         data_example = PIL.Image.open('visualizations/six_random_butterflies.png')
