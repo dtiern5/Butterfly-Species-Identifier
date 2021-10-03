@@ -9,7 +9,7 @@ from connector import create_db_connection, execute_query
 
 
 def main():
-    connection = create_db_connection("localhost", "root", "ROOT33qq!", "dash_log")
+    connection = create_db_connection("us-cdbr-east-04.cleardb.com", "b651608ca7d2bd", "3aa158cc", "heroku_976b1d9f54370b0")
     st.sidebar.header("Dashboard")
     page = st.sidebar.selectbox("Page", ["Image Prediction", "Dataset", "Neural Network"])
 
@@ -65,7 +65,7 @@ def main():
 
             st.pyplot(fig=bar_graph, clear_figure=None)
 
-            query = f"INSERT INTO dash_log.log (species) VALUES ('{label}');"
+            query = f"INSERT INTO heroku_976b1d9f54370b0.dash_log (species) VALUES ('{label}');"
             execute_query(connection, query)
 
     if page == "Dataset":
