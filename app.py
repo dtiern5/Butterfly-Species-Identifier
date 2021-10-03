@@ -5,14 +5,11 @@ from PIL import Image
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
 from classifier import machine_classification, get_percentages, bar_graph_predictions
-import datetime
-from connector import create_server_connection, create_db_connection, execute_query
-
+from connector import create_db_connection, execute_query
 
 
 def main():
     connection = create_db_connection("localhost", "root", "ROOT33qq!", "dash_log")
-
     st.sidebar.header("Dashboard")
     page = st.sidebar.selectbox("Page", ["Image Prediction", "Dataset", "Neural Network"])
 
@@ -49,13 +46,13 @@ def main():
             col2.image(img, caption='Predicting image...', use_column_width=True)
 
             img_array = img_to_array(im_resized)
-            print("IMAGE SHAPE:", img_array.shape)
+            # print("IMAGE SHAPE:", img_array.shape)
             img_array = img_array / 255
             img_array = np.expand_dims(img_array, axis=0)
-            print("IMAGE EXPANDED SHAPE:", img_array.shape)
+            # print("IMAGE EXPANDED SHAPE:", img_array.shape)
 
             prediction = model.predict(img_array)
-            print("NP.ARGMAX:", np.argmax(prediction))
+            # print("NP.ARGMAX:", np.argmax(prediction))
             label = machine_classification(prediction)
             percentages = get_percentages(prediction)
 
@@ -68,7 +65,7 @@ def main():
 
             st.pyplot(fig=bar_graph, clear_figure=None)
 
-            query = f"INSERT INTO dash_log.log (species) VALUES '{label}';"
+            query = f"INSERT INTO dash_log.log (species) VALUES ('{label}');"
             execute_query(connection, query)
 
     if page == "Dataset":
