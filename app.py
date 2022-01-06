@@ -43,7 +43,7 @@ def main():
                 (width, height) = (220, 220)
                 im_resized = img.resize((width, height))
 
-            col2.image(img, caption='Predicting image...', use_column_width=True)
+            col1.image(img, caption='Predicting image...', use_column_width=True)
 
             img_array = img_to_array(im_resized)
             # print("IMAGE SHAPE:", img_array.shape)
