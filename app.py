@@ -18,22 +18,22 @@ def main():
 
         col1, col2 = st.columns(2)
         col1.title("Butterfly Classifier")
-        col1.subheader("Accepts the following species:")
-        col1.text('1. Danaus plexippus')
-        col1.text('2. Heliconius erato')
-        col1.text('3. Junonia coenia')
-        col1.text('4. Lycaena phlaeas')
-        col1.text('5. Nymphalis antiopa')
-        col1.text('6. Papilio cresphontes')
-        col1.text('7. Pieris rapae')
-        col1.text('8. Heliconius charitonius')
-        col1.text('9. Vanessa atalanta')
-        col1.text('10. Vanessa cardui')
+        col2.subheader("Accepts the following species:")
+        col2.text('1. Danaus plexippus')
+        col2.text('2. Heliconius erato')
+        col2.text('3. Junonia coenia')
+        col2.text('4. Lycaena phlaeas')
+        col2.text('5. Nymphalis antiopa')
+        col2.text('6. Papilio cresphontes')
+        col2.text('7. Pieris rapae')
+        col2.text('8. Heliconius charitonius')
+        col2.text('9. Vanessa atalanta')
+        col2.text('10. Vanessa cardui')
 
-        col2.header("Upload")
+        col1.header("Upload")
 
         model = load_model('dense_model.h5')
-        uploaded_file = col2.file_uploader("Select a picture: ", type=['png', 'jpeg', 'jpg'])
+        uploaded_file = col2.file_uploader("Select or take a photo: ", type=['png', 'jpeg', 'jpg'])
 
         if uploaded_file is not None:
             img = PIL.Image.open(uploaded_file)
@@ -59,11 +59,11 @@ def main():
             bar_graph = bar_graph_predictions(prediction)
 
             st.write("")
-            st.subheader("Prediction:")
-            for percentage in percentages[:3]:
-                st.write(percentage)
+            st.subheader("Prediction: " + percentages[0])
+            # for percentage in percentages[:3]:
+            #     st.write(percentage)
 
-            st.pyplot(fig=bar_graph, clear_figure=None)
+            # st.pyplot(fig=bar_graph, clear_figure=None)
 
             query = f"INSERT INTO heroku_976b1d9f54370b0.dash_log (species) VALUES ('{label}');"
             execute_query(connection, query)
